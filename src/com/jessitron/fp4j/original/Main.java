@@ -14,9 +14,11 @@ public class Main {
         final FunctionOverTime incrementalCosts = FunctionOverTime.line(5.1, 0.15);
 
         final FunctionOverTime profit =
-                (time) -> sales.valueAt(time) -
-                        (fixedCosts.valueAt(time) +
-                        incrementalCosts.valueAt(time)
+                FunctionOverTime.combinationOf3(
+                        sales, incrementalCosts, fixedCosts ,
+                        (s, ic, fc) -> s - ic - fc
+                );
+
         );
 
         double total = 0.0;

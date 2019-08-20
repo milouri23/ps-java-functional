@@ -26,4 +26,18 @@ public interface FunctionOverTime {
             return sum;
         };
     }
+
+    @FunctionalInterface
+    static interface FunctionOf3 {
+        double apply(double a, double b, double c);
+    }
+
+    static FunctionOverTime combinationOf3(final FunctionOverTime a,
+                                           final FunctionOverTime b,
+                                           final FunctionOverTime c,
+                                           final FunctionOf3 f) {
+        return time -> f.apply(a.valueAt(time),
+                               b.valueAt(time),
+                               c.valueAt(time));
+    }
 }
