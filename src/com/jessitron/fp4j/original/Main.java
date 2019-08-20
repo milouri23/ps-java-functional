@@ -9,11 +9,9 @@ public class Main {
     public static void main(String[] args) {
 
         final FunctionOverTime sales =
-                (time) -> EXPECTED_SALES_JAN_TO_DEC[time - 1];
-
-        final FunctionOverTime fixedCosts = (time) -> 0.15;
-        final FunctionOverTime incrementalCosts =
-                (time) -> 5.1 + 0.15 * time;
+                FunctionOverTime.monthByMonth(EXPECTED_SALES_JAN_TO_DEC);
+        final FunctionOverTime fixedCosts = FunctionOverTime.constant(0.15);
+        final FunctionOverTime incrementalCosts = FunctionOverTime.line(5.1, 0.15);
 
         final FunctionOverTime profit =
                 (time) -> sales.valueAt(time) -
