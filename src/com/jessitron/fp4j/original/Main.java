@@ -8,16 +8,17 @@ public class Main {
 
     public static void main(String[] args) {
 
-        final Sales sales = new Sales(EXPECTED_SALES_JAN_TO_DEC);
+        final FunctionOverTime sales =
+                (time) -> EXPECTED_SALES_JAN_TO_DEC[time - 1];
 
-        final FixedCosts fixedCosts = new FixedCosts(15.0);
-        final IncrementalCosts incrementalCosts =
-                new IncrementalCosts(5.1, 0.15);
+        final FunctionOverTime fixedCosts = (time) -> 0.15;
+        final FunctionOverTime incrementalCosts =
+                (time) -> 5.1 + 0.15 * time;
 
-        final Profit profit = new Profit(
-                sales,
-                incrementalCosts,
-                fixedCosts
+        final FunctionOverTime profit =
+                (time) -> sales.valueAt(time) -
+                        (fixedCosts.valueAt(time) +
+                        incrementalCosts.valueAt(time)
         );
 
         double total = 0.0;
